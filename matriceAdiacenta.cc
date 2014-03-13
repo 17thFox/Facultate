@@ -38,4 +38,12 @@ int main() {
 		}
 		cout << endl;
 	}
+	
+	//gradele unui nod
+	for (int index_linii = 1; index_linii <= nrNoduri; index_linii++) {
+		int gradNod = 0;
+		for (int index_coloane = 1; index_coloane <= nrNoduri; index_coloane++) 
+			if (matrice[index_linii][index_coloane] != 0) gradNod++;
+		cout << "Nodul " << index_linii << " are gradul " << gradNod << "." << endl;
+	}
 }
