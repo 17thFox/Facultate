@@ -17,18 +17,16 @@ int main() {
 		cout << "Nodul " << index << " cate muchii are? - ";
 		cin >> nrMuchii;
 		
-		if (nrMuchii != 0){
-			while (nrMuchii != 0) {
-				int nodAdiacent;
+		while (nrMuchii != 0) {
+			int nodAdiacent;
 			
-				cout << "Catre ce nod? - ";
-				cin >> nodAdiacent;
+			cout << "Catre ce nod? - ";
+			cin >> nodAdiacent;
 			
-				matrice[index][nodAdiacent] = 1;
-				matrice[nodAdiacent][index] = 1;
+			matrice[index][nodAdiacent] = 1;
+			matrice[nodAdiacent][index] = 1;
 			
-				nrMuchii--;
-			}
+			nrMuchii--;
 		}
 	}
 	cout << endl << "Matricea de adiacenta: " << endl;
@@ -46,4 +44,5 @@ int main() {
 			if (matrice[index_linii][index_coloane] != 0) gradNod++;
 		cout << "Nodul " << index_linii << " are gradul " << gradNod << "." << endl;
 	}
+	
 }
