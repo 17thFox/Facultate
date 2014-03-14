@@ -33,11 +33,11 @@ int main() {
 			
 			if (tipGrad == 1) {
 				matrice[index][nodAdiacent] = 1;
-				matrice[nodAdiacent][index] = -1;
+				matrice[nodAdiacent][index] = 1;
 				gradInterior[nodAdiacent]++;
 			}
 			else {
-				matrice[index][nodAdiacent] = -1;
+				matrice[index][nodAdiacent] = 1;
 				matrice[nodAdiacent][index] = 1;
 				gradExterior[nodAdiacent]++;
 			}
