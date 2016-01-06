@@ -4,11 +4,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class main extends JFrame {
 
 	private JPanel contentPane;
 
+//	JLabel lblBunaTeRog = new JLabel("<html>Buna! Te rog sa adaugi un sir de numere in casuta de mai jos.<br> Acesta va fi sortat dupa metoda Quicksort!</html>");
 	/**
 	 * Launch the application.
 	 */
@@ -36,6 +45,7 @@ public class main extends JFrame {
 	}
 	
 	private static int v[];// = new int[100];
+	private JTextField textField;
 	
 //	private static void quicksort(int start, int finish){
 //		if (start == finish || start>finish){
@@ -120,13 +130,42 @@ public class main extends JFrame {
 	 */
 	public main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(0, 0, 1280, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("<html>Buna! Te rog sa adaugi un sir de numere in casuta de mai jos. Acesta va fi sortat dupa metoda Quicksort!</html>");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(40, 0, 1198, 14);
+		contentPane.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(12, 26, 1254, 25);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Pas cu pas");
+		int position = 200;
+		btnNewButton.setBounds(580 - position, 79, 117, 25);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Automat");
+		btnNewButton_1.setBounds(580 + position, 79, 117, 25);
+		contentPane.add(btnNewButton_1);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(12, 127, 1254, 421);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.BLACK);
+		panel_1.setForeground(Color.BLACK);
+		panel_1.setBounds(381, 5, 251, 120);
+		panel.add(panel_1);
 	}
-
 }
 class ceva {
 	private int a;
