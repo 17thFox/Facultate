@@ -16,7 +16,7 @@ import java.awt.Color;
 public class main extends JFrame {
 
 	private JPanel contentPane;
-
+	private static JPanel panel;
 //	JLabel lblBunaTeRog = new JLabel("<html>Buna! Te rog sa adaugi un sir de numere in casuta de mai jos.<br> Acesta va fi sortat dupa metoda Quicksort!</html>");
 	/**
 	 * Launch the application.
@@ -25,18 +25,19 @@ public class main extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					main frame = new main();
-					frame.setVisible(true);
 					v = new int[8];
 					v[0] = 0;
 					v[1] = 7;
 					v = new int[]{
-							0,7,6,2,5,4,1,3
+							0,25,26,2,5,4,1,3
 					};
 					quicksort2(0, 7);
 					for(int i =0; i<8; i++){
 						System.out.println(v[i]);
 					}
+
+					main frame = new main();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -102,6 +103,7 @@ public class main extends JFrame {
 	 * @param i pozitia i
 	 * @param j pozitia j
 	 */
+	 
 	private static void interschimba(int i, int j){
 		int y = v[i];
 		v[i] = v[j];
@@ -155,7 +157,7 @@ public class main extends JFrame {
 		btnNewButton_1.setBounds(580 + position, 79, 117, 25);
 		contentPane.add(btnNewButton_1);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(12, 127, 1254, 421);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -163,10 +165,29 @@ public class main extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.BLACK);
 		panel_1.setForeground(Color.BLACK);
-		panel_1.setBounds(381, 5, 251, 120);
-		panel.add(panel_1);
+		panel_1.setBounds(372, 289, 251, 120);
+//		panel.add(panel_1);
+		creareTurnuri();
+	}
+	private static JPanel[] turnuri;
+	private static void creareTurnuri(){
+		turnuri = new JPanel[v.length];
+		for (int i = 0; i < v.length; i++){
+			int spacing = 15;
+			int width = 25;
+			int height = 15 * v[i];
+			int pozitie = (width + spacing) * i;
+			
+			turnuri[i] = new JPanel();
+			turnuri[i].setBackground(Color.BLACK);
+			turnuri[i].setForeground(Color.BLACK);
+			turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
+			panel.add(turnuri[i]);
+		}
 	}
 }
+
+
 class ceva {
 	private int a;
 	public int b;
