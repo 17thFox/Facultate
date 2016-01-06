@@ -8,6 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -33,7 +36,7 @@ public class main extends JFrame {
 					};
 					quicksort2(0, 7);
 					for(int i =0; i<8; i++){
-						System.out.println(v[i]);
+//						System.out.println(v[i]);
 					}
 
 					main frame = new main();
@@ -46,7 +49,7 @@ public class main extends JFrame {
 	}
 	
 	private static int v[];// = new int[100];
-	private JTextField textField;
+	private static JTextField textField;
 	
 //	private static void quicksort(int start, int finish){
 //		if (start == finish || start>finish){
@@ -151,6 +154,19 @@ public class main extends JFrame {
 		JButton btnNewButton = new JButton("Pas cu pas");
 		int position = 200;
 		btnNewButton.setBounds(580 - position, 79, 117, 25);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated lmethod stub
+				createNumbers();
+				System.out.println(v.length);
+				System.out.println(turnuri.length);
+				clearTurnuri();
+				creareTurnuri();
+				System.out.println(turnuri.length);
+			}
+		});
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Automat");
@@ -169,6 +185,25 @@ public class main extends JFrame {
 //		panel.add(panel_1);
 		creareTurnuri();
 	}
+	private static void createNumbers(){
+		String numereText = textField.getText().toString();
+		String[] numere = numereText.split(" ");
+		v = new int [numere.length];
+		for(int i = 0; i < numere.length; i++)
+		{
+			v[i] = Integer.parseInt(numere[i]);
+//			System.out.println(v[i]);
+		}
+	}
+	private static void clearTurnuri(){
+		if (turnuri == null || turnuri.length == 0){
+			return;
+		}
+		for (int i = 0; i < turnuri.length; i++)
+		{
+			turnuri[i].setVisible(false);
+		}
+	}
 	private static JPanel[] turnuri;
 	private static void creareTurnuri(){
 		turnuri = new JPanel[v.length];
@@ -182,6 +217,7 @@ public class main extends JFrame {
 			turnuri[i].setBackground(Color.BLACK);
 			turnuri[i].setForeground(Color.BLACK);
 			turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
+			turnuri[i].setVisible(true);
 			panel.add(turnuri[i]);
 		}
 	}
