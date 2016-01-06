@@ -24,7 +24,7 @@ public class main extends JFrame {
 					v = new int[]{
 							0,7,6,2,5,4,1,3
 					};
-					quicksort(0, 7);
+					quicksort2(0, 7);
 					for(int i =0; i<8; i++){
 						System.out.println(v[i]);
 					}
@@ -37,60 +37,82 @@ public class main extends JFrame {
 	
 	private static int v[];// = new int[100];
 	
-	private static void quicksort(int start, int finish){
-		if (start == finish || start>finish){
-			return;
-		}
-		int i = start;
-		int j = finish;
-		int ii = 1;
-		int jj = 0;
-		int k = seteazaPozitie(start, finish);
-		while (i != k && j!= k)
-		{
-//			System.out.println(i+ " " + j + " " + k);
-			if (v[i] < v[j]){
-				
-			}
-			else {
-				interschimba(i,j);
-				if (ii == 1){
-					jj = -1;
-					ii = 0;
-				}
-				else {
-					jj = 0;
-					ii = 1;
-				}
-			}
-			i+=ii;
-			j+=jj;
-		}
-	quicksort(start, k-1);
-	quicksort(k+1, finish); // CTRL + Space pentru autocomplete
-		
-	}
+//	private static void quicksort(int start, int finish){
+//		if (start == finish || start>finish){
+//			return;
+//		}
+//		int i = start;
+//		int j = finish;
+//		int ii = 1;
+//		int jj = 0;
+//		int k = seteazaPozitie(start, finish);
+//		while (i != k && j!= k)
+//		{
+////			System.out.println(i+ " " + j + " " + k);
+//			if (v[i] < v[j]){
+//				
+//			}
+//			else {
+//				interschimba(i,j);
+//				if (ii == 1){
+//					jj = -1;
+//					ii = 0;
+//				}
+//				else {
+//					jj = 0;
+//					ii = 1;
+//				}
+//			}
+//			i+=ii;
+//			j+=jj;
+//		}
+//	quicksort(start, k-1);
+//	quicksort(k+1, finish); // CTRL + Space pentru autocomplete
+//		
+//	}
+//	/**
+//	 * Pune ultimul element (pivot) pe pozitia care trebuie.
+//	 * @param start
+//	 * @param finish
+//	 * @return Returneaza pozitia pe care se afla pivotul.
+//	 */
+//	private static int seteazaPozitie(int start, int finish){
+//		int h = 0;
+//		for (int i = start; i < finish; i++ ){
+//			if (v[finish] > v[i])
+//			{
+//				h++;
+//			}
+//		}
+//		interschimba(h + start,finish);
+//		return h+start;
+//	}
 	/**
-	 * Pune ultimul element (pivot) pe pozitia care trebuie.
-	 * @param start
-	 * @param finish
-	 * @return Returneaza pozitia pe care se afla pivotul.
+	 * Functia interschimba elementul de pe pozitia i cu elementul de pe pozitia j. (vector) 
+	 * @param i pozitia i
+	 * @param j pozitia j
 	 */
-	private static int seteazaPozitie(int start, int finish){
-		int h = 0;
-		for (int i = start; i < finish; i++ ){
-			if (v[finish] > v[i])
-			{
-				h++;
-			}
-		}
-		interschimba(h + start,finish);
-		return h+start;
-	}
 	private static void interschimba(int i, int j){
 		int y = v[i];
 		v[i] = v[j];
 		v[j] = y;
+	}
+	
+	private static void quicksort2(int start, int finish){
+		if (start < 0 || start > finish)
+		{
+			return;
+		}
+		int i = start;
+		for(int j = start; j < finish; j++){
+			if(v[j] < v[finish]){
+				interschimba(i, j);
+				i++;
+			}
+		}
+		interschimba(finish, i);
+		quicksort2(start, i - 1);
+		quicksort2(i + 1, finish);
 	}
 
 	/**
