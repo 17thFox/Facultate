@@ -14,12 +14,15 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.Color;
 
 public class main extends JFrame {
 
 	private JPanel contentPane;
 	private static JPanel panel;
+	private ThreadQuicksort threadQuicksort;
 //	JLabel lblBunaTeRog = new JLabel("<html>Buna! Te rog sa adaugi un sir de numere in casuta de mai jos.<br> Acesta va fi sortat dupa metoda Quicksort!</html>");
 	/**
 	 * Launch the application.
@@ -32,7 +35,7 @@ public class main extends JFrame {
 					v[0] = 0;
 					v[1] = 7;
 					v = new int[]{
-							0,25,26,2,5,4,1,3
+							6,25,26,2,5,4,1,3
 					};
 					quicksort2(0, 7);
 					for(int i =0; i<8; i++){
@@ -159,12 +162,22 @@ public class main extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated lmethod stub
-				createNumbers();
-				System.out.println(v.length);
-				System.out.println(turnuri.length);
-				clearTurnuri();
-				creareTurnuri();
-				System.out.println(turnuri.length);
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+//						createNumbers();
+//						clearTurnuri();
+//						creareTurnuri();
+//						clearTurnuri();
+//						creareTurnuri();
+						if (threadQuicksort == null){
+						}
+						else {
+							threadQuicksort.clearTurnuri();
+						}
+						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel);					
+						threadQuicksort.start();
+					}
+				});
 			}
 		});
 		contentPane.add(btnNewButton);
@@ -183,10 +196,55 @@ public class main extends JFrame {
 		panel_1.setForeground(Color.BLACK);
 		panel_1.setBounds(372, 289, 251, 120);
 //		panel.add(panel_1);
-		creareTurnuri();
+//		creareTurnuri();
 	}
-	private static void createNumbers(){
-		String numereText = textField.getText().toString();
+	
+	
+//	private static JPanel[] turnuri;
+//	
+//	private static void creareTurnuri(){
+//		turnuri = new JPanel[v.length];
+//		for (int i = 0; i < v.length; i++){
+//			int spacing = 15;
+//			int width = 25;
+//			int height = 15 * v[i];
+//			int pozitie = (width + spacing) * i;
+//			
+//			turnuri[i] = new JPanel();
+//			turnuri[i].setBackground(Color.BLACK);
+//			turnuri[i].setForeground(Color.BLACK);
+//			turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
+//			turnuri[i].setVisible(true);
+//			System.out.println(i + " " + spacing + " " + width + " " + height + " " + pozitie);
+//			panel.add(turnuri[i]);
+//		}
+//		panel.revalidate();
+//	}
+}
+
+class ThreadQuicksort extends Thread{
+	private String numereMele;
+	private JPanel panel;
+	
+	public ThreadQuicksort(String numereMele, JPanel panel) {
+			this.numereMele = numereMele;
+			this.panel = panel;
+	}
+	
+	@Override
+	public void run(){ // ce scriu in run o sa se faca pe alt thread
+		createNumbers();
+		
+		creareTurnuri();
+		
+//		clearTurnuri();
+//		creareTurnuri();
+	}
+	
+	int[] v;
+	
+	private void createNumbers(){
+		String numereText = numereMele;
 		String[] numere = numereText.split(" ");
 		v = new int [numere.length];
 		for(int i = 0; i < numere.length; i++)
@@ -195,17 +253,23 @@ public class main extends JFrame {
 //			System.out.println(v[i]);
 		}
 	}
-	private static void clearTurnuri(){
+	
+	public void clearTurnuri(){
 		if (turnuri == null || turnuri.length == 0){
 			return;
 		}
+		System.out.println("clear size " + turnuri.length);
 		for (int i = 0; i < turnuri.length; i++)
 		{
 			turnuri[i].setVisible(false);
 		}
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
 	}
-	private static JPanel[] turnuri;
-	private static void creareTurnuri(){
+	private JPanel[] turnuri;
+	
+	private void creareTurnuri(){
 		turnuri = new JPanel[v.length];
 		for (int i = 0; i < v.length; i++){
 			int spacing = 15;
@@ -218,32 +282,17 @@ public class main extends JFrame {
 			turnuri[i].setForeground(Color.BLACK);
 			turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
 			turnuri[i].setVisible(true);
+			System.out.println(i + " " + spacing + " " + width + " " + height + " " + pozitie);
 			panel.add(turnuri[i]);
+			panel.revalidate();
+			panel.repaint();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-}
-
-
-class ceva {
-	private int a;
-	public int b;
-	public static int c;
-	public final int d = 3;
-	public static final int e = 4;
-//	public static final int e; - gresit, e-ul trebuie initializat 
-	public static final String coloanaBazaDeDate = "Coloana Prenume";
-}
-class altaClasa {
-	public void f(){
-		ceva obj = new ceva();
-		ceva obj2 = new ceva();
-		obj.c = 1;
-		obj2.c = 2;
-		ceva.c = 3;
-		obj.b = 1;
-		obj2.b = 2;
-//		ceva.b = 3; - gresit, b nu este static (ctrl + /  -  comenteaza si decomenteaza)
-		System.out.println(obj.c); // afiseaza 3
-//		obj.d = 4;  - gresit, d este final, adica constant
-	}
+	
 }
