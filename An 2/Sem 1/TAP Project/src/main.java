@@ -54,6 +54,7 @@ public class main extends JFrame {
 	private static int v[];// = new int[100];
 	private static JTextField textField;
 	private JButton btnNewButton_2;
+	private JTextField textField_1;
 	
 //	private static void quicksort(int start, int finish){
 //		if (start == finish || start>finish){
@@ -117,7 +118,7 @@ public class main extends JFrame {
 	 */
 	public main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1280, 600);
+		setBounds(0, 0, 1280, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -154,7 +155,7 @@ public class main extends JFrame {
 							threadQuicksort.stopAll();
 							threadQuicksort.clearTurnuri();
 						}
-						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel, true);					
+						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel, true, textField_1);					
 						threadQuicksort.start();
 					}
 				});
@@ -183,7 +184,7 @@ public class main extends JFrame {
 							threadQuicksort.stopAll();
 							threadQuicksort.clearTurnuri();
 						}
-						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel, false);					
+						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel, false, textField_1);					
 						threadQuicksort.start();
 					}
 				});
@@ -222,6 +223,13 @@ public class main extends JFrame {
 
 		contentPane.add(btnNewButton_2);
 		
+		textField_1 = new JTextField();
+		textField_1.setBounds(12, 593, 1254, 25);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+//		textField_1.setEnabled(false);
+		
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.BLACK);
 		panel_1.setForeground(Color.BLACK);
@@ -259,11 +267,14 @@ class ThreadQuicksort extends Thread{
 	private boolean stop;
 	private boolean next;
 	private boolean isPascuPas;
+	private JTextField textField_1;
+
 	
-	public ThreadQuicksort(String numereMele, JPanel panel, boolean isPascuPas) {
+	public ThreadQuicksort(String numereMele, JPanel panel, boolean isPascuPas, JTextField textField_1) {
 			this.numereMele = numereMele;
 			this.panel = panel;
 			this.isPascuPas = isPascuPas;
+			this.textField_1 = textField_1;
 	}
 	
 	@Override
@@ -272,8 +283,18 @@ class ThreadQuicksort extends Thread{
 		
 		creareTurnuri();
 		quicksort2(0, v.length - 1);
+		afiseaza();
 //		clearTurnuri();
 //		creareTurnuri();
+	}
+	private void afiseaza(){
+//		adaug toate elementele vectorului in string, dupa care afisez stringul in textfield_1 prin settext
+		String elemente = "";
+		for (int i = 0; i < v.length; i++){
+			elemente += String.valueOf(v[i]) + " ";
+		}
+	textField_1.setText(elemente);	
+		
 	}
 	
 	int[] v;
