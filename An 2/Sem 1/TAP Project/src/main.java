@@ -37,7 +37,7 @@ public class main extends JFrame {
 					v = new int[]{
 							6,25,26,2,5,4,1,3
 					};
-					quicksort2(0, 7);
+//					quicksort2(0, 7);
 					for(int i =0; i<8; i++){
 //						System.out.println(v[i]);
 					}
@@ -110,28 +110,6 @@ public class main extends JFrame {
 	 * @param j pozitia j
 	 */
 	 
-	private static void interschimba(int i, int j){
-		int y = v[i];
-		v[i] = v[j];
-		v[j] = y;
-	}
-	
-	private static void quicksort2(int start, int finish){
-		if (start < 0 || start > finish)
-		{
-			return;
-		}
-		int i = start;
-		for(int j = start; j < finish; j++){
-			if(v[j] < v[finish]){
-				interschimba(i, j);
-				i++;
-			}
-		}
-		interschimba(finish, i);
-		quicksort2(start, i - 1);
-		quicksort2(i + 1, finish);
-	}
 
 	/**
 	 * Create the frame.
@@ -157,7 +135,11 @@ public class main extends JFrame {
 		JButton btnNewButton = new JButton("Pas cu pas");
 		int position = 200;
 		btnNewButton.setBounds(580 - position, 79, 117, 25);
-		btnNewButton.addActionListener(new ActionListener() {
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Automat");
+		btnNewButton_1.setBounds(580 + position, 79, 117, 25);
+		btnNewButton_1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +154,7 @@ public class main extends JFrame {
 						if (threadQuicksort == null){
 						}
 						else {
+							threadQuicksort.stopAll();
 							threadQuicksort.clearTurnuri();
 						}
 						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel);					
@@ -180,10 +163,6 @@ public class main extends JFrame {
 				});
 			}
 		});
-		contentPane.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Automat");
-		btnNewButton_1.setBounds(580 + position, 79, 117, 25);
 		contentPane.add(btnNewButton_1);
 		
 		panel = new JPanel();
@@ -225,6 +204,7 @@ public class main extends JFrame {
 class ThreadQuicksort extends Thread{
 	private String numereMele;
 	private JPanel panel;
+	private boolean stop;
 	
 	public ThreadQuicksort(String numereMele, JPanel panel) {
 			this.numereMele = numereMele;
@@ -236,7 +216,7 @@ class ThreadQuicksort extends Thread{
 		createNumbers();
 		
 		creareTurnuri();
-		
+		quicksort2(0, v.length - 1);
 //		clearTurnuri();
 //		creareTurnuri();
 	}
@@ -272,6 +252,10 @@ class ThreadQuicksort extends Thread{
 	private void creareTurnuri(){
 		turnuri = new JPanel[v.length];
 		for (int i = 0; i < v.length; i++){
+//			if(stop)
+//			{
+//				return;
+//			}
 			int spacing = 15;
 			int width = 25;
 			int height = 15 * v[i];
@@ -282,17 +266,106 @@ class ThreadQuicksort extends Thread{
 			turnuri[i].setForeground(Color.BLACK);
 			turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
 			turnuri[i].setVisible(true);
-			System.out.println(i + " " + spacing + " " + width + " " + height + " " + pozitie);
+//			System.out.println(i + " " + spacing + " " + width + " " + height + " " + pozitie);
 			panel.add(turnuri[i]);
 			panel.revalidate();
 			panel.repaint();
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
+	}
+	
+	public void stopAll()
+	{
+		stop = true;
+	}
+	
+	private void interschimba(int i, int j){
+		int y = v[i];
+		v[i] = v[j];
+		v[j] = y;
+	}
+	
+	private void quicksort2(int start, int finish){
+		if (start < 0 || start > finish)
+		{
+			return;
+		}
+		int i = start;
+		for(int j = start; j < finish; j++){
 			try {
+				updateColors(finish, i, j);
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			updateColors2(finish, i, j);
+			if(v[j] < v[finish]){
+				interschimba(i, j);
+				resize(i);
+				resize(j);
+				i++;
+			}
 		}
+		interschimba(finish, i);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resize(i);
+		resize(finish);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		updateColors2(finish, i, finish);
+		quicksort2(start, i - 1);
+		quicksort2(i + 1, finish);
 	}
 	
+	private void updateColors(int pivotPosition,int i, int j){
+		turnuri[pivotPosition].setBackground(Color.RED);
+		
+		if ( i == j){
+			turnuri[i].setBackground(Color.BLUE);
+		}
+		else{
+			turnuri[i].setBackground(Color.YELLOW);
+			turnuri[j].setBackground(Color.GREEN);	
+		}
+		panel.revalidate();
+		panel.repaint();
+	}
+	private void updateColors2(int pivotPosition,int i, int j){
+		turnuri[pivotPosition].setBackground(Color.RED);
+		if (pivotPosition == j){
+			turnuri[pivotPosition].setBackground(Color.BLACK);
+		}
+			turnuri[i].setBackground(Color.BLACK);
+			turnuri[j].setBackground(Color.BLACK);	
+		
+		panel.revalidate();
+		panel.repaint();
+	}
+	private void resize(int i)
+	{
+
+		int spacing = 15;
+		int width = 25;
+		int height = 15 * v[i];
+		int pozitie = (width + spacing) * i;
+
+		turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
+		panel.revalidate();
+		panel.repaint();
+	}
 }
