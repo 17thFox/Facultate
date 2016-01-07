@@ -53,6 +53,7 @@ public class main extends JFrame {
 	
 	private static int v[];// = new int[100];
 	private static JTextField textField;
+	private JButton btnNewButton_2;
 	
 //	private static void quicksort(int start, int finish){
 //		if (start == finish || start>finish){
@@ -132,9 +133,34 @@ public class main extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Pas cu pas");
+		JButton btnNewButton = new JButton("Init");
 		int position = 200;
 		btnNewButton.setBounds(580 - position, 79, 117, 25);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated lmethod stub
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+//						createNumbers();
+//						clearTurnuri();
+//						creareTurnuri();
+//						clearTurnuri();
+//						creareTurnuri();
+						if (threadQuicksort == null){
+						}
+						else {
+							threadQuicksort.stopAll();
+							threadQuicksort.clearTurnuri();
+						}
+						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel, true);					
+						threadQuicksort.start();
+					}
+				});
+			}
+		});
+
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Automat");
@@ -157,7 +183,7 @@ public class main extends JFrame {
 							threadQuicksort.stopAll();
 							threadQuicksort.clearTurnuri();
 						}
-						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel);					
+						threadQuicksort = new ThreadQuicksort(textField.getText().toString(), panel, false);					
 						threadQuicksort.start();
 					}
 				});
@@ -169,6 +195,32 @@ public class main extends JFrame {
 		panel.setBounds(12, 127, 1254, 421);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		btnNewButton_2 = new JButton("Pas cu pas");
+		btnNewButton_2.setBounds(380, 104, 117, 25);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated lmethod stub
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+//						createNumbers();
+//						clearTurnuri();
+//						creareTurnuri();
+//						clearTurnuri();
+//						creareTurnuri();
+						if (threadQuicksort != null){
+							threadQuicksort.nextPas();
+
+							System.out.println("click");
+						}
+					}
+				});
+			}
+		});
+
+		contentPane.add(btnNewButton_2);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.BLACK);
@@ -205,10 +257,13 @@ class ThreadQuicksort extends Thread{
 	private String numereMele;
 	private JPanel panel;
 	private boolean stop;
+	private boolean next;
+	private boolean isPascuPas;
 	
-	public ThreadQuicksort(String numereMele, JPanel panel) {
+	public ThreadQuicksort(String numereMele, JPanel panel, boolean isPascuPas) {
 			this.numereMele = numereMele;
 			this.panel = panel;
+			this.isPascuPas = isPascuPas;
 	}
 	
 	@Override
@@ -291,18 +346,16 @@ class ThreadQuicksort extends Thread{
 	}
 	
 	private void quicksort2(int start, int finish){
-		if (start < 0 || start > finish)
+		if (start < 0 || start > finish || stop == true)
 		{
 			return;
 		}
 		int i = start;
 		for(int j = start; j < finish; j++){
-			try {
-				updateColors(finish, i, j);
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			updateColors(finish, i, j);
+			pas();
+			if (stop == true){
+				return;
 			}
 			updateColors2(finish, i, j);
 			if(v[j] < v[finish]){
@@ -313,19 +366,15 @@ class ThreadQuicksort extends Thread{
 			}
 		}
 		interschimba(finish, i);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		pas();
+		if (stop == true){
+			return;
 		}
 		resize(i);
 		resize(finish);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		pas();
+		if (stop == true){
+			return;
 		}
 		updateColors2(finish, i, finish);
 		quicksort2(start, i - 1);
@@ -367,5 +416,31 @@ class ThreadQuicksort extends Thread{
 		turnuri[i].setBounds(pozitie, 289+120 - height, width, height);
 		panel.revalidate();
 		panel.repaint();
+	}
+	private void pas(){
+		if(isPascuPas == false ){
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		else {
+			while (next == false && stop == false){
+
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			next = false;
+//			System.out.println("pas");
+		}
+	}
+	public void nextPas(){
+		next = true;
 	}
 }
