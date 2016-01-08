@@ -17,7 +17,6 @@ public class main {
 
 class Huffman {
 	int frecv[] = new int[256];
-	ArrayList<Integer> sumaNodurilor = new ArrayList<>();
 	ArrayList<Nod> nodurile = new ArrayList<>();
 
 	public void solve(String text) {
@@ -47,13 +46,9 @@ class Huffman {
 			
 			Nod newNod = new Nod();
 			newNod.frecventa = nod1.frecventa + nod2.frecventa;
-			if (nod1.frecventa < nod2.frecventa) {
-				newNod.stanga = nod1;
-				newNod.dreapta = nod2;
-			} else {
-				newNod.stanga = nod2;
-				newNod.dreapta = nod1;
-			}
+			newNod.stanga = nod1;
+			newNod.dreapta = nod2;
+			
 			nodurile.add(newNod);
 		}
 		afisare(nodurile.get(nodurile.size() - 1), "");
