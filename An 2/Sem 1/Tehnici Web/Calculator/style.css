@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 	
 	/* Better text styling */
-	font: bold 14px Arial, sans-serif;
+	font: italic bold 18px Arial, sans-serif; Arial, sans-serif;
 }
 
 /* Finally adding some IE9 fallbacks for gradients to finish things up */
@@ -14,7 +14,7 @@
 html {
 	height: 100%;
 	background: white;
-	background: radial-gradient(circle, #fff 20%, #ccc);
+	background: radial-gradient(circle, #F0E1EC 20%, #EBA7D8);
 	background-size: cover;
 }
 
@@ -26,11 +26,11 @@ html {
 	margin: 100px auto;
 	padding: 20px 20px 9px;
 	
-	background: #9dd2ea;
-	background: linear-gradient(#9dd2ea, #8bceec);
-	border-radius: 3px;
-	box-shadow: 0px 4px #009de4, 0px 10px 15px rgba(0, 0, 0, 0.2);
+	background: white;
+	border-radius: 25px;
+	box-shadow: 0px 4px #95A5A6, 0px 10px 25px rgba(0, 0, 0, 1);
 }
+
 
 /* Top portion */
 .top span.clear {
@@ -47,7 +47,7 @@ html {
 	padding: 0 10px;
 	
 	background: rgba(0, 0, 0, 0.2);
-	border-radius: 3px;
+	border-radius: 9px;
 	box-shadow: inset 0px 4px rgba(0, 0, 0, 0.2);
 	
 	/* Typography */
@@ -73,13 +73,13 @@ html {
 	width: 66px;
 	height: 36px;
 	
-	background: white;
-	border-radius: 3px;
-	box-shadow: 0px 4px rgba(0, 0, 0, 0.2);
+	background: #F0F5FA;
+	border-radius: 9px;
+	box-shadow: 0px 3px rgba(0, 0, 0, 0.3);
 	
 	margin: 0 7px 11px 0;
 	
-	color: #888;
+	color: #99119E;
 	line-height: 36px;
 	text-align: center;
 	
@@ -98,14 +98,12 @@ html {
 }
 
 .keys span.eval {
-	background: #f1ff92;
-	box-shadow: 0px 4px #9da853;
-	color: #888e5f;
+	background: #8CFF4A;
+	color: white;
 }
 
 .top span.clear {
 	background: #ff9fa8;
-	box-shadow: 0px 4px #ff7c87;
 	color: white;
 }
 
@@ -116,11 +114,6 @@ html {
 	color: white;
 }
 
-.keys span.eval:hover {
-	background: #abb850;
-	box-shadow: 0px 4px #717a33;
-	color: #ffffff;
-}
 
 .top span.clear:hover {
 	background: #f68991;
