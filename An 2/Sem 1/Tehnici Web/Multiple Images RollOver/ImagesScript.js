@@ -10,7 +10,7 @@ $(function () {
         imgstack.push($('.ic').find('span').eq(i).text());
     }
 
-    alert(imgstack);
+    //alert(imgstack);
 
     $('.mss').mouseover(function () {
         interval = setInterval(
@@ -19,14 +19,14 @@ $(function () {
                     
                     var img = imgstack[p];
                     $('.thumb').attr('src', img);
-                    $('.mss').html(img);
+                    //$('.mss').html(img);
                     p = p + 1;
                 }
 
                 else {
                     var img = imgstack[p];
-                    //$('.thumb').attr('src', img);
-                    $('.mss').html(img);
+                    $('.thumb').attr('src', img);
+                    //$('.mss').html(img);
                     p = 0;
                 }
             }
@@ -39,6 +39,6 @@ $(function () {
         clearInterval(interval);
         p = 0;
         $('.thumb').attr('src', 'Images-1.jpg');
-        $('.mss').html('Images-1.jpg');
+        //$('.mss').html('Images-1.jpg');
     });
 });
