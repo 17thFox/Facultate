@@ -1,47 +1,41 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<link rel="stylesheet" href="style.css" type="text/css">
-		<title>Proiect Tehnici Web</Title>
+<head>
+	<link rel="stylesheet" href="style.css" type="text/css">
+	<title>Proiect Tehnici Web</Title>
 		
-	</head>
-	<body id="body">
+</head>
+
+<body id="body">
+	<header>
+		<h1 class="head">Proiect Tehnici Web</h1>
+	</header>
 	
-		<header>
-			<h1 class="head">Proiect Tehnici Web</h1>
-		</header>
-		
-		<div class="container">
+	<div class="container">
 		<section id="leftMenuSection">
 			<ul class="leftMenu">
 				<li class="title" >Aplicatii</li>
 				<li class="fields">
-					<ol>
+					<ul class="subItems">
 						<li><a target="theFrame" href="Calculator/Calculator.html">Calculator</a></li>
-					</ol>
+					</ul>
 				</li>
-				
-				<li class="title" >Controale</li>
-				<li class="fields">
-					<ol>
-					<li><a target="theFrame" href="Color Picker/ColorPicker.html">Color Picker</a></li>
-					</ol>
-				</li>
-				
+
 				<li class="title" >Animatie</li>
 				<li class="fields">
-					<ol>
-					<li><a target="theFrame" href="Multiple Images RollOver/Images.html">Imagini Multiple</a></li>
-					</ol>
+					<ul class="subItems">
+						<li><a target="theFrame" href="Multiple Images RollOver/Images.html">Imagini Multiple</a></li>
+					</ul>
 				</li>
 			</ul>
 		</section>
-		
+
 		<aside>
-			<iframe id="theFrame" name="theFrame" src="IframeHome.html"></iframe>
+			<iframe id="theFrame" name="theFrame" src="frame.html"></iframe>
 		</aside>
-		<div>
-		
-	</body>
-	<script src="script.js"></script>
+	<div>	
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="script.js"></script>
 </html>

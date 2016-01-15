@@ -1,6 +1,4 @@
 body{
-	//background-image:url(../Images/BackgroundImage.jpg);
-	//background-repeat:repeat-x;
 	background-color: #F7F7F7;
 }
 header{
@@ -14,11 +12,10 @@ section{
 	bottom: 0;
 	width: 25%;
 	min-width: 100px;
-	//margin: 1%;
 	margin-top: 0;
 	background-color: #F9690E;
 	border-radius: 10px;
-	height: 100%;
+	height: auto;
 	padding-left: 0px;
 	margin-left: 0px;
 }
@@ -33,7 +30,6 @@ aside{
 
 li{
 	list-style:none;
-	//overflow: hidden;
 
 }
 li.fields {

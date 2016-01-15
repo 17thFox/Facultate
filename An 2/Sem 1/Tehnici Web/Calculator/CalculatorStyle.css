@@ -1,21 +1,15 @@
-/* Basic reset */
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	
-	/* Better text styling */
 	font: italic bold 18px Arial, sans-serif; Arial, sans-serif;
 }
 
-/* Finally adding some IE9 fallbacks for gradients to finish things up */
-
-/* A nice BG gradient */
 html {
 	height: 100%;
 	background: white;
-	background: radial-gradient(circle, #F0E1EC 20%, #EBA7D8);
-	background-size: cover;
+	background: radial-gradient(circle, #F0E1EC 20%, #EBA7D8); 
 }
 
 /* Using box shadows to create 3D effects */
@@ -28,16 +22,13 @@ html {
 	
 	background: white;
 	border-radius: 25px;
-	box-shadow: 0px 4px #95A5A6, 0px 10px 25px rgba(0, 0, 0, 1);
+	box-shadow: 0px 10px 25px rgba(170, 0, 0, 1);
 }
 
-
-/* Top portion */
 .top span.clear {
 	float: left;
 }
 
-/* Inset shadow on the screen to create indent */
 .top .screen {
 	height: 40px;
 	width: 212px;
@@ -59,7 +50,7 @@ html {
 	letter-spacing: 1px;
 }
 
-/* Clear floats */
+/* Preventing calculator to shrink */
 .keys, .top {overflow: hidden;}
 
 /* Applying same to the keys */

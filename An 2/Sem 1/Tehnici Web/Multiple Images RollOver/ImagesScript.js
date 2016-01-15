@@ -1,44 +1,33 @@
-$(function () {
+$(document).ready(function () {
     //alert("Hello");
     var p = 0;
-
     var interval;
+    var imgstack = document.querySelectorAll('.ic span');
+    var thumb = $('.thumb');
+    var thumbContainer = $('.thumbContainer');
 
-    var imgstack = [];
-
-    for (i = 0; i < $('.ic').children().length; i++) {
-        imgstack.push($('.ic').find('span').eq(i).text());
-    }
+    // for(i = 0; i < imgstack.length; i++)
+    // {
+    //     console.log(imgstack[i]);
+    // }
 
     //alert(imgstack);
 
-    $('.mss').mouseover(function () {
+    thumbContainer.mouseover(function () {
         interval = setInterval(
             function changeImg() {
-                if (p < imgstack.length-1) {
-                    
-                    var img = imgstack[p];
-                    $('.thumb').attr('src', img);
-                    //$('.mss').html(img);
-                    p = p + 1;
-                }
-
-                else {
-                    var img = imgstack[p];
-                    $('.thumb').attr('src', img);
-                    //$('.mss').html(img);
-                    p = 0;
-                }
+                    var img = imgstack[ p % imgstack.length ].innerText;
+                    thumb.attr('src', img);
+                    p++;
             }
-        , 1000);
+            , 1000);
     });
 
 
 
-    $('.mss').mouseout(function () {
+    thumbContainer.mouseout(function () {
         clearInterval(interval);
         p = 0;
-        $('.thumb').attr('src', 'Images-1.jpg');
-        //$('.mss').html('Images-1.jpg');
+        thumb.attr('src', 'Images-1.jpg');
     });
 });
