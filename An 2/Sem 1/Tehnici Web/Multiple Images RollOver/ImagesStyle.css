@@ -10,8 +10,8 @@ body
     position:relative;
     width:300px;
     height:300px;
-    left:100px;
-    top:100px;
+    top: 50px;
+    left: 200px;
     border:3px solid #bebebe;
     cursor:pointer;
     text-align:center;

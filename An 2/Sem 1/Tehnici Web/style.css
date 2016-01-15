@@ -1,9 +1,13 @@
-body{
-	background-color: #F7F7F7;
-}
 header{
 	text-align: center;
 }
+
+html {
+	height: 100%;
+	background: white;
+	background: radial-gradient(circle, #fff 20%, #ccc); 
+}
+
 section{
 	position: static;
 	display: block;
@@ -72,5 +76,4 @@ li.title {
 #theFrame{
 	width:98%;
 	height:98%;
-	background-color: #FFFFFF;
 }
