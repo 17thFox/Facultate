@@ -1,14 +1,13 @@
 * {
 	
-	font: bold 14px Arial, sans-serif; Arial, sans-serif;
+	font: bold 16px Arial, sans-serif; Arial, sans-serif;
 }
 .head{
-		font-size: 20px;
+	font-size: 24px;
 	text-align: center;
 }
 
 html {
-
 	height: 100%;
 	background: white;
 }
@@ -27,6 +26,7 @@ section{
 	height: auto;
 	padding-left: 0px;
 	margin-left: 0px;
+	box-shadow: 0px 4px #EC7DFA;
 }
 aside{
 	position:relative;
@@ -53,9 +53,9 @@ li.title {
 	
     font-weight: bold;
     font-size : 100%;
-    line-height: 2em;
+    line-height: 24px;
     background: #FFE9DB;
-    border-bottom: 1px solid #c5c5c5;
+    border-bottom: 1px solid #EC7DFA;
     border-top: 1px solid white;
     clear: both;
 }
