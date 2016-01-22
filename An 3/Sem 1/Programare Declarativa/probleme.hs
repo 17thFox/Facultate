@@ -55,3 +55,19 @@ celMaiMareNumarPrim n
 						|otherwise	=	error("Numarul n nu poate fi mai mic decat 3!")
 
 
+
+--4. Se da n. Aflati toti divizorii primi ai lui n.
+
+stripNumber::Int->Int->Int
+stripNumber n nrCrt
+						|n`mod`nrCrt == 0	=	stripNumber (n`div`nrCrt) nrCrt
+						|otherwise			=	n
+
+divizoriiPrimi'::Int->Int->[Int]
+divizoriiPrimi' n nrCrt
+						|n <= 1 	=	[]
+						|n`mod`nrCrt == 0 	=	nrCrt : divizoriiPrimi' (stripNumber n nrCrt) (nrCrt+1)
+						|otherwise 			= 	divizoriiPrimi' n (nrCrt+1)
+
+divizoriiPrimi::Int->[Int]
+divizoriiPrimi n = divizoriiPrimi' n 2
