@@ -71,3 +71,41 @@ divizoriiPrimi' n nrCrt
 
 divizoriiPrimi::Int->[Int]
 divizoriiPrimi n = divizoriiPrimi' n 2
+
+--5. Cel mai mare divizor comun a doua numere.
+cmmdc::Int->Int->Int
+cmmdc a b
+			| a < 1 || b < 1 	=	error("Numerele a si b trebuie sa fie mai mari ca 1!")
+			| a > b 	=	cmmdc (a-b) b
+			| a < b 	=	cmmdc a (b-a)
+			| otherwise	=	a
+
+--6. Quicksort.
+getLeft::Int->[Int]->[Int]
+getLeft x [] = []
+getLeft x (nr:numere)
+					| x > nr 		=	nr : getLeft x numere
+					| otherwise 	=	getLeft x numere	
+getRight::Int->[Int]->[Int]
+getRight x [] = []
+getRight x (nr:numere)
+					| x <= nr 		=	nr : getRight x numere
+					| otherwise 	=	getRight x numere	
+
+quicksort::[Int]->[Int]
+quicksort [] = []
+quicksort (x:numere) = (quicksort (getLeft x numere)) ++ (x : (quicksort (getRight x numere)))
+
+--7. Se da o lista de numere. Creati un arbore binar de cautare.
+
+
+
+--8. Se da o lista de numere. Afisati arborele binar de cautare in preordine.
+
+
+
+--9. Se da o lista de numere si un numar x din lista. Afisati subarborele elementului x.
+
+
+
+--10. 
