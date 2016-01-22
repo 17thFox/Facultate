@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
+
+body {
+    background: url(https://dl.dropboxusercontent.com/u/23299152/Wallpapers/wallpaper-22705.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
+
+.eval {
+    background: none;
+    border: 0;
+}
+
+
+/* Using box shadows to create 3D effects */
+#calculator {
+    width: 325px;
+    height: auto;
+    margin-top: 50px;
+    margin: auto;
+    padding: 20px 20px 9px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0px 10px 25px rgba(170, 0, 0, 1);
+}
+
+.top span.clear {
+    float: left;
+}
+
+.top .screen {
+    height: 40px;
+    width: 212px;
+    float: right;
+    padding: 0 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 9px;
+    box-shadow: inset 0px 4px rgba(0, 0, 0, 0.2);
+    /* Typography */
+    font-size: 17px;
+    line-height: 40px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    text-align: right;
+    letter-spacing: 1px;
+}
+
+/* Preventing calculator to shrink */
+.keys, .top {
+    overflow: hidden;
+}
+
+    /* Applying same to the keys */
+    .keys span, .top span.clear, .eval {
+        float: left;
+        position: relative;
+        top: 0;
+        cursor: pointer;
+        width: 66px;
+        height: 36px;
+        background: #F0F5FA;
+        border-radius: 9px;
+        box-shadow: 0px 3px rgba(0, 0, 0, 0.3);
+        margin: 0 7px 11px 0;
+        color: #99119E;
+        line-height: 36px;
+        text-align: center;
+        /* prevent selection of text inside keys */
+        user-select: none;
+        /* Smoothing out hover and active states using css3 transitions */
+        transition: all 0.2s ease;
+    }
+
+        /* Remove right margins from operator keys */
+        /* style different type of keys (operators/evaluate/clear) differently */
+        .keys span.operator {
+            background: #FFF0F5;
+            margin-right: 0;
+        }
+
+        .keys span.eval, .eval {
+            background: #8CFF4A;
+            color: white;
+        }
+
+    .top span.clear {
+        background: #ff9fa8;
+        color: white;
+    }
+
+    /* Some hover effects */
+    .keys span:hover, .eval:hover {
+        background: #9c89f6;
+        box-shadow: 0px 4px #6b54d3;
+        color: white;
+    }
+
+
+    .top span.clear:hover {
+        background: #f68991;
+        box-shadow: 0px 4px #d3545d;
+        color: white;
+    }
+
+    /* Simulating "pressed" effect on active state of the keys by removing the box-shadow and moving the keys down a bit */
+    .keys span:active {
+        box-shadow: 0px 0px #6b54d3;
+        top: 4px;
+    }
+
+    .keys span.eval:active, .eval:active {
+        box-shadow: 0px 0px #717a33;
+        top: 4px;
+    }
+
+    .top span.clear:active {
+        top: 4px;
+        box-shadow: 0px 0px #d3545d;
+    }
+
+table {
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 100px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #5DB071;
+    color:white;
+}

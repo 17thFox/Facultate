@@ -1,0 +1,52 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <link href='navbar.css' media='all' rel='stylesheet'>
+
+    <script runat="server">
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Context.User.Identity.IsAuthenticated)
+            {
+                signInButton.Visible = false;
+                signOutButton.Visible = true;
+                profileButton.Visible = true;
+            }
+            else
+            {
+                signInButton.Visible = true;
+                signOutButton.Visible = false;
+                profileButton.Visible = false;
+            }
+        }
+    </script>
+
+    <div class="navbar">
+        <ul class="navbarUl">
+            <li class="navbarButtonLi"><a class="active" href="Index.aspx">Calculator</a></li>
+        </ul>
+        
+        <ul class="navbarUlRight">
+            <li class="navbarButton" id="signOutButton" runat="server"><a href="SignOut.aspx">Sign out</a></li>
+            <li class="navbarButton" id="profileButton" runat="server"><a class="active" href="MyProfile.aspx">Profile</a></li>
+            <li class="navbarButton" id="signInButton" runat="server"><a class="active" href="Login.aspx">Sign in</a></li>
+        </ul>
+
+    </div>
+
+    <div class="page">
+
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+</body>
+</html>
