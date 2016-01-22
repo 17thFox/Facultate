@@ -9,25 +9,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <link href='navbar.css' media='all' rel='stylesheet'>
-
-    <script runat="server">
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (Context.User.Identity.IsAuthenticated)
-            {
-                signInButton.Visible = false;
-                signOutButton.Visible = true;
-                profileButton.Visible = true;
-            }
-            else
-            {
-                signInButton.Visible = true;
-                signOutButton.Visible = false;
-                profileButton.Visible = false;
-            }
-        }
-    </script>
+    <link href='navbar.css' media='all' rel='stylesheet' />
 
     <div class="navbar">
         <ul class="navbarUl">

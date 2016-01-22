@@ -76,6 +76,7 @@ public partial class Index : System.Web.UI.Page
             "FROM [history] h " +
             "JOIN [users] u ON u.[Id] = h.[user] " +
             "ORDER BY h.[Id] DESC";
+        //Updating HTML
         SqlDataSource1.DataBind();
         historyGridView.DataBind();
     }

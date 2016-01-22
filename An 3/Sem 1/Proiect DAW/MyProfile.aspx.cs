@@ -100,9 +100,6 @@ public partial class MyProfile : System.Web.UI.Page
                     ageValue = -1;
                     int.TryParse(myReader["age"].ToString(), out ageValue);
                     genderValue = myReader["gender"].ToString();
-
-                    myReader.Close();
-                    con.Close();
                 }
 
                 myReader.Close();
@@ -115,7 +112,7 @@ public partial class MyProfile : System.Web.UI.Page
         }
     }
 
-    private void saveProfile()
+    private void saveProfileToDatabase()
     {
         if (Context.User.Identity.IsAuthenticated)
         {
@@ -170,9 +167,7 @@ public partial class MyProfile : System.Web.UI.Page
             ageValue = myAge;
             genderValue = gender.Text;
 
-            message.InnerText = firstnameValue + " " + lastnameValue + " " + ageValue + " " + genderValue;
-
-            saveProfile();
+            saveProfileToDatabase();
             Response.Redirect("Index.aspx");
         }
         else
