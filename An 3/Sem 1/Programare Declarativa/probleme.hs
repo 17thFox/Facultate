@@ -96,16 +96,43 @@ quicksort::[Int]->[Int]
 quicksort [] = []
 quicksort (x:numere) = (quicksort (getLeft x numere)) ++ (x : (quicksort (getRight x numere)))
 
---7. Se da o lista de numere. Creati un arbore binar de cautare.
+--7. Se da o lista de numere. Creati(afisati) un arbore binar de cautare.
+data Arbore a = Nil | Leaf a | Branch a (Arbore a) (Arbore a)
+insert::Int->(Arbore Int)->(Arbore Int)
+insert x (Nil) = Leaf x
+insert x (Leaf node)
+						| x < node	=	Branch node (Leaf x) Nil
+						| x > node	=	Branch node Nil (Leaf x)
+insert x tree@(Branch node left right)
+									| x < node 	=	Branch (node) (insert x left) (right)
+									| x > node 	=	Branch (node) (left) (insert x right)
+									| otherwise =	tree
+insertAll'::[Int]->(Arbore Int)->(Arbore Int)
+insertAll' [] tree@(Branch _ left right) = tree
+insertAll' (x:xs) (Nil) = insertAll' xs (insert x (Nil))
+insertAll' (x:xs) (Leaf node) = insertAll' xs (insert x (Leaf node))
+insertAll' (x:xs) tree@(Branch node left right) = insertAll' xs (insert x tree)
+
+insertAll::[Int]->(Arbore Int)
+insertAll (x:xs) = insertAll' (x:xs) (Nil)
 
 
 
 --8. Se da o lista de numere. Afisati arborele binar de cautare in preordine.
+showArbore'::(Arbore Int)->[Int]
+showArbore' (Nil) = []
+showArbore' (Leaf node) = [node]
+showArbore' (Branch node left right) = (showArbore' left) ++ [node] ++ (showArbore' right)
 
-
+showArbore::[Int]->[Int]
+showArbore (x:xs) = showArbore' (insertAll (x:xs)) 
 
 --9. Se da o lista de numere si un numar x din lista. Afisati subarborele elementului x.
 
 
 
---10. 
+--10. Se da o lista de numere. Calculati adancimea arborelui binar de cautare.
+
+
+
+--11. 
