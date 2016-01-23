@@ -128,10 +128,31 @@ showArbore::[Int]->[Int]
 showArbore (x:xs) = showArbore' (insertAll (x:xs)) 
 
 --9. Se da o lista de numere si un numar x din lista. Afisati subarborele elementului x.
+showSubarbore'::Int->(Arbore Int)->(Arbore Int)
+showSubarbore' x (Nil) = (Nil)
+showSubarbore' x (Leaf node) 
+								| x == node 	=	(Leaf node)
+								|otherwise		=	(Nil)
+showSubarbore' x (Branch node left right)
+											| x > node 	=	showSubarbore' x right
+											| x < node 	=	showSubarbore' x left
+											| otherwise =	(Branch node left right)
 
+showSubarbore::[Int]->Int->[Int]
+showSubarbore (x:xs) a = showArbore' (showSubarbore' a (insertAll (x:xs)))
 
 
 --10. Se da o lista de numere. Calculati adancimea arborelui binar de cautare.
+adancimeArbore'::Int->(Arbore Int)->Int
+adancimeArbore' x (Nil) = x
+adancimeArbore' x (Leaf node) = x+1
+adancimeArbore' x (Branch node left right)
+											| adancimeArbore' (x+1) left < adancimeArbore' (x+1) right 	=	adancimeArbore' (x+1) right 
+											| otherwise 												= 	adancimeArbore' (x+1) left  
+
+
+adancimeArbore::[Int]->Int
+adancimeArbore (x:xs) = adancimeArbore' (insertAll (x:xs))
 
 
 
