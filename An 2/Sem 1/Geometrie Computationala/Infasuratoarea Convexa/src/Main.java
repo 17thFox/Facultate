@@ -15,6 +15,8 @@ import javax.management.loading.MLet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -70,15 +72,15 @@ public class Main extends JFrame {
 		puncteTextArea = new JTextArea();
 		scrollPane.setViewportView(puncteTextArea);
 
-		JButton button = new JButton("Draw");
+		final JButton button = new JButton("Draw");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				listaPuncteSolutie.clear();
 				getPuncteFromText(puncteTextArea.getText());
 
 				if (listaPuncte.size() >= 3) {
-					System.out.println("called repaint");
-					swapCelMaiDeLaStangaPunct();
+					swapCelMaiDeJosPunct();
 					sorteazaPuncte();
 					gasestePunctele();
 
@@ -193,38 +195,52 @@ public class Main extends JFrame {
 
 		String[] pointsString = text.split("\n");
 		for (int i = 0; i < pointsString.length; i++) {
-			String[] coordinatesString = pointsString[i].split(" ");
-
-			float x = Float.parseFloat(coordinatesString[0]);
-			float y = Float.parseFloat(coordinatesString[1]);
-
-			System.out.println(x + " " + y);
-
-			listaPuncte.add(new MyPoint(x, y));
+			try {
+				String[] coordinatesString = pointsString[i].split(" ");
+	
+				float x = Float.parseFloat(coordinatesString[0]);
+				float y = Float.parseFloat(coordinatesString[1]);
+	
+				System.out.println(x + " " + y);
+	
+				listaPuncte.add(new MyPoint(x, y));
+			}
+			catch(Exception exception){
+				
+			}
 		}
 	}
 
 	private void sorteazaPuncte() {
-		MyPoint celMaiDinStanga = listaPuncte.get(0);
+		
+		final MyPoint celMaiDeJos = listaPuncte.get(0);
 		listaPuncte.remove(0);
+		
 		Collections.sort(listaPuncte, new Comparator<MyPoint>() {
 
+			/**
+			 * return -1 : A -> B
+			 * return  1 : B -> A
+			 * return  0 : A -> B
+			 */
 			@Override
 			public int compare(MyPoint A, MyPoint B) {
 
-				if (getPolarAngle(A) < getPolarAngle(B)) {
+				if (getPolarAngle(A, celMaiDeJos) < getPolarAngle(B, celMaiDeJos)) {
 					return -1;
-				} else if (getPolarAngle(A) > getPolarAngle(B)) {
+				} else if (getPolarAngle(A, celMaiDeJos) > getPolarAngle(B, celMaiDeJos)) {
 					return 1;
 				}
 				return 0;
 			}
 		});
-		listaPuncte.add(0, celMaiDinStanga);
+		listaPuncte.add(0, celMaiDeJos);
+		
 	}
 
-	float getPolarAngle(MyPoint point) {
-		return (float) (Math.atan2(point.y, point.x));
+	float getPolarAngle(MyPoint point, MyPoint source) {
+		//Math.atan2 <=> tan^(-1)
+		return (float) (Math.atan2(point.y - source.y, point.x - source.x));
 	}
 
 	/**
@@ -248,34 +264,40 @@ public class Main extends JFrame {
 	 */
 
 	private void gasestePunctele() {
-
-		int N = listaPuncte.size();
+		
+		int nrPuncte = listaPuncte.size();
 		// adauga ultimul punct pe prima pozitie (el va face parte din
 		// infasuratoare)
-		listaPuncte.add(0, listaPuncte.get(N - 1));
+		listaPuncte.add(0, listaPuncte.get(nrPuncte - 1));
 
-		// M will denote the number of points on the convex hull.
-		int M = 1;
-		for (int i = 2; i <= N; i++) {
-			// Find next valid point on convex hull.
-			while (direction(listaPuncte.get(M - 1), listaPuncte.get(M), listaPuncte.get(i)) <= 0) {
-				if (M > 1) {
-					M -= 1;
+//		System.out.println("sorted:");
+//		for(int i = 0; i < listaPuncte.size(); i++)
+//		{
+//			System.out.println(i + " " + listaPuncte.get(i).x + " " + listaPuncte.get(i).y);
+//		}
+		
+		// Numarul de pucte din solutie
+		int nrPuncteSol = 1;
+		for (int i = 2; i <= nrPuncte; i++) {
+			// Cat timp punctul este coliniar sau in dreapta liniei determinate de ultimele doua pcte din solutie
+			while (directie(listaPuncte.get(nrPuncteSol - 1), listaPuncte.get(nrPuncteSol), listaPuncte.get(i)) <= 0) {
+				//Ultimul pct din solutie nu e bun, asa ca il elimin
+				if (nrPuncteSol > 1) {
+					nrPuncteSol -= 1;
 				}
 				// All points are collinear
-				else if (i == N) {
+				else if (i == nrPuncte) {
 					break;
 				} else {
 					i += 1;
 				}
 			}
 
-			// Update M and swap points[i] to the correct place.
-			M += 1;
-			swapPoints(M, i);
+			nrPuncteSol += 1;
+			swapPoints(nrPuncteSol, i);
 		}
 		
-		for(int i = 0; i < M; i++)
+		for(int i = 0; i < nrPuncteSol; i++)
 		{
 			listaPuncteSolutie.add(listaPuncte.get(i));
 			System.out.println("solutie, punctul #" + (i+1) + ": " + listaPuncte.get(i).x + " " + listaPuncte.get(i).y);
@@ -283,27 +305,27 @@ public class Main extends JFrame {
 	}
 
 	/**
-	 * Interschimba punctul de pe pozitia 0 cu punctul cel mai din stanga (sau
-	 * cel mai de jos in caz de egalitate)
+	 * Interschimba punctul de pe pozitia 0 cu punctul cel mai de jos (sau
+	 * cel mai din stanga in caz de egalitate)
 	 */
-	private void swapCelMaiDeLaStangaPunct() {
-		MyPoint celMaiDinStanga = listaPuncte.get(0);
-		int indexCelMaiDinStanga = 0;
+	private void swapCelMaiDeJosPunct() {
+		MyPoint celMaiDeJos = listaPuncte.get(0);
+		int indexCelMaiDeJos = 0;
 		for (int i = 1; i < listaPuncte.size(); i++) {
 
-			if (listaPuncte.get(i).x < celMaiDinStanga.x) {
-				celMaiDinStanga = listaPuncte.get(i);
-				indexCelMaiDinStanga = i;
-			} else if (listaPuncte.get(i).x == celMaiDinStanga.x) {
+			if (listaPuncte.get(i).y < celMaiDeJos.y) {
+				celMaiDeJos = listaPuncte.get(i);
+				indexCelMaiDeJos = i;
+			} else if (listaPuncte.get(i).y == celMaiDeJos.y) {
 
-				if (listaPuncte.get(i).y < celMaiDinStanga.y) {
-					celMaiDinStanga = listaPuncte.get(i);
-					indexCelMaiDinStanga = i;
+				if (listaPuncte.get(i).x < celMaiDeJos.x) {
+					celMaiDeJos = listaPuncte.get(i);
+					indexCelMaiDeJos = i;
 				}
 			}
 		}
 
-		swapPoints(0, indexCelMaiDinStanga);
+		swapPoints(0, indexCelMaiDeJos);
 	}
 
 	private void swapPoints(int i, int j) {
@@ -312,23 +334,20 @@ public class Main extends JFrame {
 		listaPuncte.set(j, aux);
 	}
 
-	private MyPoint findPoint() {
-		return new MyPoint(1, 1);
-	}
-
-	/*
-	
-	*/
 	/**
 	 *
-	 * | 1 1 1 | | Ax Bx Cx | | Ay By Cy | Det = Bx * Cy + Ax * By + Ay * Cx -
-	 * Bx * Ay - By * Cx - Cy * Ax
+	 * | 1 	1  1  | 
+	 * | Ax Bx Cx |
+	 * | Ay By Cy | 
+	 * Det = Bx * Cy + Ax * By + Ay * Cx - Bx * Ay - By * Cx - Cy * Ax
 	 *
 	 * @param A
 	 * @param B
 	 * @param C
-	 * @return 0 => cele 3 puncte sunt coliniare, > 0 => C este pe partea stanga
-	 *         a lui AB, < 0 => C este pe partea dreapta a lui AB
+	 * @return 
+	 * ==0 => cele 3 puncte sunt coliniare, 
+	 * > 0 => C este pe partea stanga a lui AB, 
+	 * < 0 => C este pe partea dreapta a lui AB
 	 */
 	int directie(MyPoint A, MyPoint B, MyPoint C) {
 		return (int) (B.x * C.y + A.x * B.y + A.y * C.x - B.x * A.y - B.y * C.x - C.y * A.x);
@@ -380,7 +399,9 @@ public class Main extends JFrame {
 					punctePanel.getHeight() - (int) (B.y * scale + translateY)
 				);
 		}
+		
 	}
+	
 }
 
 class MyPoint {
