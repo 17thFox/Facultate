@@ -10,16 +10,55 @@ afisareNumerePare (x:xs)
 			| x`mod`2 == 0	=	x : afisareNumerePare xs
 			| otherwise		=	afisareNumerePare xs
 
---1. Se da o lista si trebuie sa afisam numerele prime din ea.
+--1. Se da o lista si un numar x. Sa se inmulteasca fiecare numar din lista cu x.
+listaSiNumar::[Int] -> Int -> [Int]
+listaSiNumar [] nr = []
+listaSiNumar (x:xs) nr = x * nr : listaSiNumar xs nr
 
-isqrt :: Int -> Int
-isqrt = floor . sqrt . fromIntegral
+--2. Se da o lista si un numar x. Afisati o lista care contine toate numerele care impartite la x au restul 0.
+impartiteLaX::[Int] -> Int -> [Int]
+impartiteLaX [] nr = []
+impartiteLaX (x:xs) nr
+						| x`mod`nr == 0	=	x : impartiteLaX xs nr
+						| otherwise		=	impartiteLaX xs nr 
 
+--3. Afisati al n-lea numar Fibonacci.
+
+fibonacciNr'::Int -> Int -> Int -> Int->Int
+fibonacciNr' nrCurent fostulNr n numaratoare
+												| numaratoare == n 	=	nrCurent 
+												| n == 1			=	1
+												| numaratoare < n 	=	fibonacciNr' (nrCurent+fostulNr) nrCurent n (numaratoare+1) 
+												| otherwise			=	error("Nu exista!")
+fibonacciNr::Int->Int
+fibonacciNr n = fibonacciNr' 1 1 n 2
+
+--4. Se da o lista de numere si un x. Afisati de cate ori se afla x in lista.
+aparitiiX'::[Int] -> Int -> Int -> Int
+aparitiiX' [] n numaratoare = numaratoare
+aparitiiX' (x:xs) n numaratoare
+					| x == n 	=	aparitiiX' xs n numaratoare+1
+					| x /= n 	=	aparitiiX' xs n numaratoare
+
+aparitiiX::[Int] -> Int -> Int
+aparitiiX xs n = aparitiiX' xs n 0
+
+--5. Se da o lista si un numar x si un numar n. Insearti pe x in lista la pozitia n.
+inserarePePozitie'::[Int] -> Int -> Int -> Int -> [Int]
+inserarePePozitie' [] numarX numarN numaratoare = [] 
+inserarePePozitie' (x:xs) numarX numarN numaratoare
+						| numaratoare /= numarN		=	x : inserarePePozitie' xs numarX numarN (numaratoare+1) 
+						| numaratoare == numarN 	=	numarX : x : inserarePePozitie' xs numarX numarN (numaratoare+1)
+						
+inserarePePozitie::[Int] -> Int -> Int -> [Int]
+inserarePePozitie xs numarX numarN = inserarePePozitie' xs numarX numarN 1 
+
+--6. Se da o lista si trebuie sa afisam numerele prime din ea.
 isPrime'::Int->Int->Bool
 isPrime' x y
 				|x < 2 							=	False 
-				|x`mod`y == 0 && y <= isqrt x 	=	False
-				|y > isqrt x					=	True
+				|x`mod`y == 0 && y*y <= x 		=	False
+				|y*y > x						=	True
 				|otherwise 						= 	isPrime' x (y+1)
 isPrime::Int->Bool
 isPrime x = isPrime' x 2
@@ -30,7 +69,7 @@ afisareNumerePrime (x:xs)
 							|isPrime x == True 	=	x : afisareNumerePrime xs
 							|otherwise			=	afisareNumerePrime xs
 
---2. Se da n. Afisati primele n numere prime.
+--7. Se da n. Afisati primele n numere prime.
 
 afisarePrimeleN'::Int->Int->[Int]
 afisarePrimeleN' numar n
@@ -40,7 +79,7 @@ afisarePrimeleN' numar n
 afisarePrimeleN::Int->[Int]
 afisarePrimeleN n = afisarePrimeleN' 2 n
 
---3. Se da n. Sa se afle cel mai mare numar prim mai mic decat n.
+--8. Se da n. Sa se afle cel mai mare numar prim mai mic decat n.
 
 celMaiMareNumarPrim'::Int->Int->Int->Int
 celMaiMareNumarPrim' n nrCrt maxPrim
@@ -56,7 +95,7 @@ celMaiMareNumarPrim n
 
 
 
---4. Se da n. Aflati toti divizorii primi ai lui n.
+--9. Se da n. Aflati toti divizorii primi ai lui n.
 
 stripNumber::Int->Int->Int
 stripNumber n nrCrt
@@ -72,7 +111,7 @@ divizoriiPrimi' n nrCrt
 divizoriiPrimi::Int->[Int]
 divizoriiPrimi n = divizoriiPrimi' n 2
 
---5. Cel mai mare divizor comun a doua numere.
+--10. Cel mai mare divizor comun a doua numere.
 cmmdc::Int->Int->Int
 cmmdc a b
 			| a < 1 || b < 1 	=	error("Numerele a si b trebuie sa fie mai mari ca 1!")
@@ -80,7 +119,7 @@ cmmdc a b
 			| a < b 	=	cmmdc a (b-a)
 			| otherwise	=	a
 
---6. Quicksort.
+--11. Quicksort.
 getLeft::Int->[Int]->[Int]
 getLeft x [] = []
 getLeft x (nr:numere)
@@ -96,7 +135,7 @@ quicksort::[Int]->[Int]
 quicksort [] = []
 quicksort (x:numere) = (quicksort (getLeft x numere)) ++ (x : (quicksort (getRight x numere)))
 
---7. Se da o lista de numere. Creati(afisati) un arbore binar de cautare.
+--12. Se da o lista de numere. Creati(afisati) un arbore binar de cautare.
 data Arbore a = Nil | Leaf a | Branch a (Arbore a) (Arbore a)
 insert::Int->(Arbore Int)->(Arbore Int)
 insert x (Nil) = Leaf x
@@ -118,7 +157,7 @@ insertAll (x:xs) = insertAll' (x:xs) (Nil)
 
 
 
---8. Se da o lista de numere. Afisati arborele binar de cautare in preordine.
+--13. Se da o lista de numere. Afisati arborele binar de cautare in preordine(svd).
 showArbore'::(Arbore Int)->[Int]
 showArbore' (Nil) = []
 showArbore' (Leaf node) = [node]
@@ -127,7 +166,7 @@ showArbore' (Branch node left right) = (showArbore' left) ++ [node] ++ (showArbo
 showArbore::[Int]->[Int]
 showArbore (x:xs) = showArbore' (insertAll (x:xs)) 
 
---9. Se da o lista de numere si un numar x din lista. Afisati subarborele elementului x.
+--14. Se da o lista de numere si un numar x din lista. Afisati subarborele elementului x.
 showSubarbore'::Int->(Arbore Int)->(Arbore Int)
 showSubarbore' x (Nil) = (Nil)
 showSubarbore' x (Leaf node) 
@@ -142,7 +181,7 @@ showSubarbore::[Int]->Int->[Int]
 showSubarbore (x:xs) a = showArbore' (showSubarbore' a (insertAll (x:xs)))
 
 
---10. Se da o lista de numere. Calculati adancimea arborelui binar de cautare.
+--15. Se da o lista de numere. Calculati adancimea arborelui binar de cautare.
 adancimeArbore'::Int->(Arbore Int)->Int
 adancimeArbore' x (Nil) = x
 adancimeArbore' x (Leaf node) = x+1
@@ -152,8 +191,4 @@ adancimeArbore' x (Branch node left right)
 
 
 adancimeArbore::[Int]->Int
-adancimeArbore (x:xs) = adancimeArbore' (insertAll (x:xs))
-
-
-
---11. 
+adancimeArbore (x:xs) = adancimeArbore' 0 (insertAll (x:xs))
